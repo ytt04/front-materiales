@@ -1,1 +1,23 @@
-<p>ciudades works!</p>
+<form (ngSubmit)="guardar()">
+  <input [(ngModel)]="ciudad.codigo" name="codigo" placeholder="Código" class="form-control mb-2">
+  <input [(ngModel)]="ciudad.nombre" name="nombre" placeholder="Nombre" class="form-control mb-2">
+  <select [(ngModel)]="ciudad.departamento.codigo" name="departamento" class="form-control mb-2">
+    <option *ngFor="let d of departamentos" [value]="d.codigo">{{ d.nombre }}</option>
+  </select>
+  <button class="btn btn-primary" (click)="guardar()">Guardar</button>
+</form>
+
+<table class="table table-striped mt-3">
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Nombre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let c of ciudades">
+      <td>{{ c.codigo }}</td>
+      <td>{{ c.nombre }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,1 +1,26 @@
-<p>materiales works!</p>
+<form (ngSubmit)="guardar()">
+  <input [(ngModel)]="material.nombre" name="nombre" placeholder="Nombre" required class="form-control mb-2">
+  <input [(ngModel)]="material.tipo" name="tipo" placeholder="Tipo" required class="form-control mb-2">
+  <input [(ngModel)]="material.fechaCompra" name="fechaCompra" type="date" class="form-control mb-2">
+  <select [(ngModel)]="material.ciudad.codigo" name="ciudad" class="form-control mb-2">
+    <option *ngFor="let c of ciudades" [value]="c.codigo">{{c.nombre}}</option>
+  </select>
+  <button class="btn btn-primary" (click)="guardar()">Guardar</button>
+</form>
+
+<table class="table table-striped mt-3">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Tipo</th>
+      <th>Ciudad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let m of materiales">
+      <td>{{ m.nombre }}</td>
+      <td>{{ m.tipo }}</td>
+      <td>{{ m.ciudad?.nombre }}</td>
+    </tr>
+  </tbody>
+</table>

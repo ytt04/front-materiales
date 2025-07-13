@@ -1,1 +1,20 @@
-<p>departamentos works!</p>
+<form (ngSubmit)="guardar()">
+  <input [(ngModel)]="departamento.codigo" name="codigo" placeholder="Código" class="form-control mb-2">
+  <input [(ngModel)]="departamento.nombre" name="nombre" placeholder="Nombre" class="form-control mb-2">
+  <button class="btn btn-primary" (click)="guardar()">Guardar</button>
+</form>
+
+<table class="table table-striped mt-3">
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Nombre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of departamentos">
+      <td>{{ d.codigo }}</td>
+      <td>{{ d.nombre }}</td>
+    </tr>
+  </tbody>
+</table>
