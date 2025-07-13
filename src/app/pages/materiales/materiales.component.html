@@ -1,26 +1,150 @@
-<form (ngSubmit)="guardar()">
-  <input [(ngModel)]="material.nombre" name="nombre" placeholder="Nombre" required class="form-control mb-2">
-  <input [(ngModel)]="material.tipo" name="tipo" placeholder="Tipo" required class="form-control mb-2">
-  <input [(ngModel)]="material.fechaCompra" name="fechaCompra" type="date" class="form-control mb-2">
-  <select [(ngModel)]="material.ciudad.codigo" name="ciudad" class="form-control mb-2">
-    <option *ngFor="let c of ciudades" [value]="c.codigo">{{c.nombre}}</option>
-  </select>
-  <button class="btn btn-primary" (click)="guardar()">Guardar</button>
-</form>
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-header bg-primary-subtle d-flex justify-content-between align-items-center">
+    <h5 class="text-secondary mb-0"><i class="bi bi-box"></i> Gestión de Materiales</h5>
+    <div>
+      <button class="btn btn-outline-success me-2" (click)="abrirModalNuevo()">
+        <i class="bi bi-plus-circle"></i> Nuevo
+      </button>
+      <button class="btn btn-outline-primary" (click)="abrirModalBusqueda()">
+        <i class="bi bi-search"></i> Buscar
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered align-middle text-center">
+        <thead class="bg-light text-secondary">
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Ciudad</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let m of materiales">
+            <td>{{ m.nombre }}</td>
+            <td><span class="text-muted small">{{ m.tipo }}</span></td>
+            <td>{{ m.ciudad?.nombre }}</td>
+            <td>
+              <span [ngClass]="{
+                'text-success fw-semibold': m.estado === 'activo',
+                'text-primary fw-semibold': m.estado === 'disponible',
+                'text-danger fw-semibold': m.estado === 'asignado'
+              }">
+                {{ m.estado }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-warning" (click)="editar(m)">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-<table class="table table-striped mt-3">
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Tipo</th>
-      <th>Ciudad</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let m of materiales">
-      <td>{{ m.nombre }}</td>
-      <td>{{ m.tipo }}</td>
-      <td>{{ m.ciudad?.nombre }}</td>
-    </tr>
-  </tbody>
-</table>
+<!-- Modal Registro/Edición Material -->
+<div class="modal fade" id="modalMaterial" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content border-0">
+      <form (ngSubmit)="guardar()">
+        <div class="modal-header bg-primary-subtle">
+          <h5 class="modal-title">{{ material.id ? 'Editar Material' : 'Nuevo Material' }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nombre</label>
+              <input [(ngModel)]="material.nombre" name="nombre" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Descripción</label>
+              <input [(ngModel)]="material.descripcion" name="descripcion" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Tipo</label>
+              <select [(ngModel)]="material.tipo" name="tipo" class="form-select" required>
+                <option value="">Seleccione</option>
+                <option *ngFor="let tipo of tiposMaterial" [value]="tipo">{{ tipo }}</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Estado</label>
+              <select [(ngModel)]="material.estado" name="estado" class="form-select">
+                <option value="">Seleccione</option>
+                <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Precio</label>
+              <input [(ngModel)]="material.precio" name="precio" type="number" min="100" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Ciudad</label>
+              <select [(ngModel)]="material.ciudad" name="ciudad" class="form-select">
+                <option [ngValue]="null">Seleccione</option>
+                <option *ngFor="let c of ciudades" [ngValue]="c">{{ c.nombre }}</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Fecha Compra</label>
+              <input [(ngModel)]="material.fechaCompra" name="fechaCompra" type="date" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Fecha Venta</label>
+              <input [(ngModel)]="material.fechaVenta" name="fechaVenta" type="date" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-outline-primary"><i class="bi bi-save2"></i> Guardar</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i class="bi bi-x"></i> Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Búsqueda Avanzada -->
+<div class="modal fade" id="modalBusqueda" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0">
+      <form (ngSubmit)="filtrarAvanzado()">
+        <div class="modal-header bg-info-subtle">
+          <h5 class="modal-title">Búsqueda Avanzada</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Tipo</label>
+            <select [(ngModel)]="tipoSeleccionado" name="tipoSeleccionado" class="form-select">
+              <option value="">Todos</option>
+              <option *ngFor="let tipo of tiposMaterial" [value]="tipo">{{ tipo }}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Ciudad</label>
+            <select [(ngModel)]="ciudadSeleccionada" name="ciudadSeleccionada" class="form-select">
+              <option value="">Todas</option>
+              <option *ngFor="let c of ciudades" [value]="c.codigo">{{ c.nombre }}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Fecha Compra</label>
+            <input type="date" [(ngModel)]="fechaSeleccionada" name="fechaSeleccionada" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-outline-primary"><i class="bi bi-funnel"></i> Filtrar</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle"></i> Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -28,7 +28,17 @@ export class CiudadesComponent implements OnInit {
 
   guardar() {
     this.ciudadService.create(this.ciudad).subscribe(res => {
-      Swal.fire('Éxito', res.message, 'success');
+      Swal.fire({
+        title: 'Éxito',
+        text: res.message,
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        background: '#f4f6fb',
+        color: '#333',
+      });
+
       this.ngOnInit();
       this.ciudad = new Ciudad();
     });

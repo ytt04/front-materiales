@@ -1,59 +1,133 @@
-# MaterialesFront
+# 💻 Frontend - App de Gestión de Materiales
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.14.
+Este proyecto frontend fue desarrollado en **Angular 17+** y permite gestionar materiales, ciudades y departamentos. Se conecta a una API REST en Spring Boot ubicada en `http://localhost:8080`.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 Requisitos Previos
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- ✅ Node.js 18+
+- ✅ Angular CLI instalado globalmente
 
 ```bash
-ng generate component component-name
+npm install -g @angular/cli
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
+
+## ⚙️ Instalación y Ejecución
+
+1. Clona este repositorio o descarga el código.
+2. Abre una terminal en la raíz del proyecto frontend.
+3. Ejecuta:
 
 ```bash
-ng generate --help
+npm install
+ng serve --open
 ```
 
-## Building
+Esto abrirá automáticamente la aplicación en el navegador:
 
-To build the project run:
+```
+http://localhost:4200
+```
+
+---
+
+## 🌐 Conexión al Backend
+
+Para que la aplicación funcione correctamente, el backend debe estar corriendo en:
+
+```
+http://localhost:8080
+```
+
+Puedes iniciarlo desde la carpeta del backend con:
 
 ```bash
-ng build
+mvn spring-boot:run
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 🧭 Navegación en la App
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+El sistema incluye un menú de navegación con rutas:
 
-```bash
-ng test
+- `/materiales` → gestión de materiales
+- `/ciudades` → gestión de ciudades
+- `/departamentos` → gestión de departamentos
+
+---
+
+## 🧪 Pruebas con Postman
+
+El frontend se conecta a una API REST documentada.
+
+Para probar los endpoints desde Postman:
+
+1. Abre Postman
+2. Importa la colección Postman del backend:
+3. Realiza pruebas para crear y listar:
+
+- Materiales
+- Ciudades
+- Departamentos
+
+---
+
+## 🎨 Estilos y Diseño
+
+- Utiliza **Bootstrap 5** para formularios y tablas
+- SweetAlert2 para mostrar notificaciones visuales
+- Navegación moderna con barra superior (`navbar`)
+
+---
+
+## 🧩 Estructura del Proyecto
+
+```
+src/
+├── app/
+│   ├── models/              ← Clases TS: Material, Ciudad, Departamento
+│   ├── services/            ← Servicios Angular para conectarse a la API
+│   ├── pages/
+│   │   ├── materiales/      ← Formulario + listado de materiales
+│   │   ├── ciudades/        ← Formulario + listado de ciudades
+│   │   └── departamentos/   ← Formulario + listado de departamentos
+│   ├── app.module.ts        ← Módulo principal
+│   ├── app.component.ts     ← Componente raíz
+│   └── app.component.html   ← Plantilla con navbar + router
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 📦 Tecnologías Utilizadas
 
-```bash
-ng e2e
+- Angular 17+
+- Bootstrap 5
+- TypeScript
+- RxJS + HttpClient
+- SweetAlert2
+
+---
+
+## 🤝 Integración completa con el backend
+
+Esta app se comunica completamente con la API del backend Spring Boot en:
+
+```
+http://localhost:8080/api
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Se recomienda probar primero:
 
-## Additional Resources
+1. `POST /departamentos`
+2. `POST /ciudades` (asociadas a un departamento creado)
+3. `POST /materiales` (asociados a una ciudad creada)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+## ✅ Autor
+
+Desarrollado por Yurley Loaiza

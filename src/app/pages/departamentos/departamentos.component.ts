@@ -22,10 +22,21 @@ export class DepartamentosComponent implements OnInit {
 
   guardar() {
     this.service.create(this.departamento).subscribe(res => {
-      Swal.fire('Éxito', res.message, 'success');
-      this.ngOnInit();
-      this.departamento = new Departamento();
-      console.log("apto",this.departamento)
+    Swal.fire({
+      title: 'Éxito',
+      text: res.message,
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 2500,
+      timerProgressBar: true,
+      background: '#f4f6fb',
+      color: '#333',
+    });
+
+    this.ngOnInit();
+    this.departamento = new Departamento();
+    console.log("apto", this.departamento);
+
     });
   }
 }

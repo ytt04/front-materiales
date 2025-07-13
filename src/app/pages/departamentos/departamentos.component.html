@@ -1,20 +1,35 @@
-<form (ngSubmit)="guardar()">
-  <input [(ngModel)]="departamento.codigo" name="codigo" placeholder="Código" class="form-control mb-2">
-  <input [(ngModel)]="departamento.nombre" name="nombre" placeholder="Nombre" class="form-control mb-2">
-  <button class="btn btn-primary" (click)="guardar()">Guardar</button>
-</form>
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-header bg-info-subtle">
+    <h5 class="text-secondary mb-0"><i class="bi bi-building"></i> Gestión de Departamentos</h5>
+  </div>
+  <div class="card-body">
+    <form (ngSubmit)="guardar()" class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Código</label>
+        <input [(ngModel)]="departamento.codigo" name="codigo" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Nombre</label>
+        <input [(ngModel)]="departamento.nombre" name="nombre" class="form-control" required>
+      </div>
+      <div class="col-12 d-flex justify-content-end">
+        <button class="btn btn-outline-success"><i class="bi bi-save"></i> Guardar</button>
+      </div>
+    </form>
 
-<table class="table table-striped mt-3">
-  <thead>
-    <tr>
-      <th>Código</th>
-      <th>Nombre</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let d of departamentos">
-      <td>{{ d.codigo }}</td>
-      <td>{{ d.nombre }}</td>
-    </tr>
-  </tbody>
-</table>
+    <table class="table table-bordered mt-4">
+      <thead class="bg-light text-secondary">
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of departamentos">
+          <td>{{ d.codigo }}</td>
+          <td>{{ d.nombre }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
